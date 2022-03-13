@@ -1,0 +1,97 @@
+plugins {
+  id 'org.springframework.boot' version '2.6.4'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'java'
+  id 'groovy'
+  id "com.diffplug.spotless" version "6.3.0"
+  id "io.freefair.lombok" version "6.4.1"
+  id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+}
+
+group = 'com.work.scheduler'
+version = scmVersion.version
+sourceCompatibility = '17'
+
+check.dependsOn spotlessCheck
+
+repositories {
+  mavenCentral()
+  maven { url 'https://repo.spring.io/milestone' }
+  maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+
+  // util
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+  // spock
+  testImplementation "org.codehaus.groovy:groovy-all:3.0.10"
+  testImplementation platform("org.spockframework:spock-bom:2.1-groovy-3.0")
+  testImplementation "org.spockframework:spock-core"
+  testImplementation "org.spockframework:spock-spring"
+
+  //lombok
+  compileOnly 'org.projectlombok:lombok:1.18.22'
+  annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+  // jackson
+  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.13.1'
+}
+
+test {
+  maxParallelForks 3
+  useJUnitPlatform()
+  filter {
+    excludeTestsMatching('**IT')
+  }
+}
+
+task integrationTest(type: Test) {
+  maxParallelForks 3
+  useJUnitPlatform()
+  filter {
+    includeTestsMatching('**IT')
+    excludeTestsMatching('**Test')
+  }
+}
+
+spotless {
+  java {
+    googleJavaFormat().reflowLongStrings()
+    importOrder()
+    removeUnusedImports()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+  groovy {
+    excludeJava()
+    greclipse()
+    indentWithSpaces(2)
+    importOrder()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+  groovyGradle {
+    target '*.gradle'
+    greclipse()
+    indentWithSpaces(2)
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+  format 'misc', {
+    target fileTree('.') {
+      include '**/*.md', '**/.gitignore'
+      exclude '**/build/**', '**/build-*/**'
+    }
+    trimTrailingWhitespace()
+    indentWithSpaces(2)
+    endWithNewline()
+  }
+}
