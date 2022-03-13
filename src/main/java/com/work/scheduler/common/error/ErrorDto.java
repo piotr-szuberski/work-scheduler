@@ -1,4 +1,4 @@
-package com.work.scheduler.error;
+package com.work.scheduler.common.error;
 
 
 import java.util.List;

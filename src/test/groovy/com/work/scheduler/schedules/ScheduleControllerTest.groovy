@@ -1,8 +1,8 @@
 package com.work.scheduler.schedules
 
 
-import com.work.scheduler.config.JacksonConfiguration
-import com.work.scheduler.interceptors.ExceptionHandlerAdvice
+import com.work.scheduler.common.config.JacksonConfiguration
+import com.work.scheduler.common.interceptors.ExceptionHandlerAdvice
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc

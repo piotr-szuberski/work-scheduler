@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  db:
+    ports:
+      - '5432:5432'
+    image: postgres:9.6.24
+    restart: always
+    environment:
+      POSTGRES_USER: scheduling_admin
+      POSTGRES_PASSWORD: scheduling_pass
+      POSTGRES_DB: schedules
+    volumes:
+      - ./src/main/resources/ddl/init-db.sql:/docker-entrypoint-initdb.d/init.sql

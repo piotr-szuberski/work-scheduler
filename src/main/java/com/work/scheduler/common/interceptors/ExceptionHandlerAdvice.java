@@ -1,7 +1,8 @@
-package com.work.scheduler.interceptors;
+package com.work.scheduler.common.interceptors;
 
-import com.work.scheduler.error.ErrorDto;
-import com.work.scheduler.error.ErrorMapper;
+
+import com.work.scheduler.common.error.ErrorDto;
+import com.work.scheduler.common.error.ErrorMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -1,4 +1,4 @@
-package com.work.scheduler.config;
+package com.work.scheduler.common.config;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

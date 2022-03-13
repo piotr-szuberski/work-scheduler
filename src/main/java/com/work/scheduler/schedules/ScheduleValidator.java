@@ -16,7 +16,8 @@ class ScheduleValidator {
   void validateSchedule(CreateScheduleDto schedule) {
     var today = LocalDateTime.now(clock);
     var shiftTime = ShiftTime.valueOf(schedule.shiftTime());
-    if (schedule.shiftDate().isEqual(today.toLocalDate()) && today.toLocalTime().isAfter(shiftTime.getStartTime())) {
+    if (schedule.shiftDate().isEqual(today.toLocalDate())
+        && today.toLocalTime().isAfter(shiftTime.getStartTime())) {
       throw scheduleValidationException("The requested shift has already begun.");
     }
   }

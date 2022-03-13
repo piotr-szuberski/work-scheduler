@@ -1,6 +1,6 @@
-package com.work.scheduler.error;
+package com.work.scheduler.common.error;
 
-import static com.work.scheduler.error.ErrorCode.INPUT_VALIDATION_ERROR;
+import static com.work.scheduler.common.error.ErrorCode.INPUT_VALIDATION_ERROR;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;

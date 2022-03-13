@@ -1,4 +1,4 @@
-package com.work.scheduler.validation;
+package com.work.scheduler.common.validation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;

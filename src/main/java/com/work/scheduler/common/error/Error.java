@@ -1,3 +1,3 @@
-package com.work.scheduler.error;
+package com.work.scheduler.common.error;
 
 public record Error(String path, String description) {}
