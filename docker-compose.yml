@@ -11,9 +11,10 @@ services:
     depends_on:
       - work-scheduler-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://work-scheduler-db:5432/schedules
-      - SPRING_DATASOURCE_USERNAME=scheduling_admin
-      - SPRING_DATASOURCE_PASSWORD=scheduling_pass
+      - DB_HOST=work-scheduler-db:5432
+      - DB_USERNAME=scheduling_admin
+      - DB_PASSWORD=scheduling_pass
+      - LOGGING_LEVEL=DEBUG
   work-scheduler-db:
     ports:
       - '5432:5432'
