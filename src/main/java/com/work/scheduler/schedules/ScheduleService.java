@@ -1,18 +1,15 @@
 package com.work.scheduler.schedules;
 
 
-import com.work.scheduler.repository.schedules.ScheduleRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.work.scheduler.schedules.api.ScheduleDto;
+import java.time.LocalDate;
+import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-class ScheduleService {
+public interface ScheduleService {
 
-  private final ScheduleRepository scheduleRepository;
+  void bookSchedule(ScheduleDto scheduleDto);
 
-  void saveSchedule(String id, CreateScheduleDto scheduleDto) {
-    var scheduleEntity = ScheduleDtoToEntityMapper.scheduleDtoToEntity(id, scheduleDto);
-    scheduleRepository.save(scheduleEntity);
-  }
+  void deleteSchedule(String id);
+
+  List<ScheduleDto> getSchedules(LocalDate dateFrom, LocalDate dateTo);
 }

@@ -55,14 +55,24 @@ test {
   filter {
     excludeTestsMatching('**IT')
   }
+  testLogging {
+    showExceptions = true
+    showStackTraces = true
+    events "standardOut", "started", "skipped", "failed"
+  }
 }
 
 task integrationTest(type: Test) {
-  maxParallelForks 3
+  maxParallelForks 1
   useJUnitPlatform()
   filter {
     includeTestsMatching('**IT')
     excludeTestsMatching('**Test')
+  }
+  testLogging {
+    showExceptions = true
+    showStackTraces = true
+    events "standardOut", "started", "skipped", "failed"
   }
 }
 

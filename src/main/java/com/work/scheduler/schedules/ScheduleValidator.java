@@ -1,7 +1,9 @@
 package com.work.scheduler.schedules;
 
-import static com.work.scheduler.schedules.ScheduleValidationException.scheduleValidationException;
+import static com.work.scheduler.schedules.exception.ScheduleValidationException.scheduleValidationException;
 
+import com.work.scheduler.common.error.ErrorCode;
+import com.work.scheduler.schedules.api.ScheduleDto;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +15,13 @@ class ScheduleValidator {
 
   private final Clock clock;
 
-  void validateSchedule(CreateScheduleDto schedule) {
+  void validateSchedule(ScheduleDto schedule) {
     var today = LocalDateTime.now(clock);
-    var shiftTime = ShiftTime.valueOf(schedule.shiftTime());
-    if (schedule.shiftDate().isEqual(today.toLocalDate())
-        && today.toLocalTime().isAfter(shiftTime.getStartTime())) {
-      throw scheduleValidationException("The requested shift has already begun.");
+    if (schedule.shiftDate().isBefore(today.toLocalDate())
+        || schedule.shiftDate().isEqual(today.toLocalDate())
+            && today.toLocalTime().isAfter(schedule.shiftTime().getStartTime())) {
+      throw scheduleValidationException(
+          ErrorCode.SHIFT_ALREADY_BEGUN, "The requested shift already begun.");
     }
   }
 }

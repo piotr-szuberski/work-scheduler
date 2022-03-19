@@ -1,4 +1,4 @@
-package com.work.scheduler.repository.workers;
+package com.work.scheduler.workers.repository;
 
 
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "workers")
-public class WorkerEntity {
+public class Worker {
 
   @Id String email;
 }

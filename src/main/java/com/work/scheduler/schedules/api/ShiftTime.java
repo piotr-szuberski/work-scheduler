@@ -1,4 +1,4 @@
-package com.work.scheduler.schedules;
+package com.work.scheduler.schedules.api;
 
 
 import java.time.LocalTime;
@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-enum ShiftTime {
+public enum ShiftTime {
   MORNING(8),
-  AFTERNOON(16),
+  EVENING(16),
   NIGHT(0);
 
   ShiftTime(Integer startTime) {

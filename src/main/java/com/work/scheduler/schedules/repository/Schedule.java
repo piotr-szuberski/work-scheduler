@@ -1,4 +1,4 @@
-package com.work.scheduler.repository.schedules;
+package com.work.scheduler.schedules.repository;
 
 
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "schedules")
-public class ScheduleEntity {
+public class Schedule {
 
   @Id private String scheduleId;
   private LocalDate shiftDate;
