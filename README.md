@@ -32,7 +32,9 @@ To run linter:
 - sleuth
 - cicd pipelines on repo
 - role based authorization
+- paging get requests
 
 business:
 - filters to get requests
--
+- eventing workers about incoming shifts
+
