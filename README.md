@@ -3,11 +3,14 @@
 Roadmap:
 - liquibase
 - swagger
-- kubernetes
+- kubernetes, helm
 - apm integration
 - grafana metrics
-
+- logback
+- sleuth
+- cicd pipelines on repo
+- role based authorization
 
 business:
 - filters to get requests
--
+- 
