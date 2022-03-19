@@ -10,4 +10,6 @@ public interface ScheduleRepository extends CrudRepository<Schedule, String> {
   List<Schedule> findAllByShiftDateBetween(LocalDate shiftDateFrom, LocalDate shiftDateTo);
 
   boolean existsByWorkerEmailAndShiftDate(String workerEmail, LocalDate shiftDate);
+
+  boolean existsByWorkerEmail(String workerEmail);
 }

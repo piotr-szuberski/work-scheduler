@@ -35,18 +35,6 @@ class WorkersControllerTest extends Specification {
     0 * _
   }
 
-  def "Should call delete workers"() {
-    when:
-    def response = mvc.perform(MockMvcRequestBuilders.delete("$PATH/$EMAIL"))
-        .andReturn()
-        .getResponse()
-
-    then:
-    response.status == 204
-    1 * workerService.deleteWorker(_)
-    0 * _
-  }
-
   def "Should call get workers"() {
     when:
     def response = mvc.perform(MockMvcRequestBuilders.get(PATH))

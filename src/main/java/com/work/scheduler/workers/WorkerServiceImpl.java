@@ -1,8 +1,6 @@
 package com.work.scheduler.workers;
 
-import static com.work.scheduler.schedules.exception.NotFoundException.notFoundException;
 
-import com.work.scheduler.common.error.ErrorCode;
 import com.work.scheduler.workers.api.WorkerDto;
 import com.work.scheduler.workers.repository.Worker;
 import com.work.scheduler.workers.repository.WorkerRepository;
@@ -17,30 +15,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class WorkerServiceImpl implements WorkerService {
 
-  private final WorkerRepository repository;
+  private final WorkerRepository workerRepository;
 
   @Override
   public void addWorker(WorkerDto workerDto) {
     var workerEntity = WorkerMapper.toEntity(workerDto);
-    repository.save(workerEntity);
-  }
-
-  @Override
-  public void deleteWorker(String workerEmail) {
-    validateToDeleteWorkerExists(workerEmail);
-    repository.deleteById(workerEmail);
+    workerRepository.save(workerEntity);
   }
 
   @Override
   public List<String> getWorkers() {
-    var workers = repository.findAll();
+    var workers = workerRepository.findAll();
     return StreamSupport.stream(workers.spliterator(), false).map(Worker::getEmail).toList();
-  }
-
-  private void validateToDeleteWorkerExists(String workerEmail) {
-    if (!repository.existsById(workerEmail)) {
-      throw notFoundException(
-          ErrorCode.WORKER_DOES_NOT_EXIST, "Worker with email '%s' does not exist", workerEmail);
-    }
   }
 }

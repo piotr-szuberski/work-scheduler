@@ -8,7 +8,5 @@ public interface WorkerService {
 
   void addWorker(WorkerDto workerDto);
 
-  void deleteWorker(String workerEmail);
-
   List<String> getWorkers();
 }
