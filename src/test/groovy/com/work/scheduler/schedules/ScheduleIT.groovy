@@ -35,7 +35,7 @@ class ScheduleIT extends BaseIT {
     workerRepository.save(new Worker(scheduleDto.email()))
 
     when:
-    scheduleService.bookSchedule(scheduleDto)
+    scheduleService.createSchedule(scheduleDto)
 
     and:
     def result = scheduleService.getSchedules(dateFrom, dateTo)
@@ -56,8 +56,8 @@ class ScheduleIT extends BaseIT {
     workerRepository.save(new Worker(scheduleEvening.email()))
 
     when:
-    scheduleService.bookSchedule(scheduleNight)
-    scheduleService.bookSchedule(scheduleEvening)
+    scheduleService.createSchedule(scheduleNight)
+    scheduleService.createSchedule(scheduleEvening)
 
     then:
     def exception = thrown(ConflictException)

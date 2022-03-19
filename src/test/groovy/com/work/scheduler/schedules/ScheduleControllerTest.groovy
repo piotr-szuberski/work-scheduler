@@ -81,12 +81,12 @@ class ScheduleControllerTest extends Specification {
     response.status == 201
     !response.contentAsString
 
-    1 * scheduleService.bookSchedule(_)
+    1 * scheduleService.createSchedule(_)
   }
 
   def "Should return bad request when schedule validation failed"() {
     given:
-    scheduleService.bookSchedule(_ as ScheduleDto) >> {
+    scheduleService.createSchedule(_ as ScheduleDto) >> {
       throw scheduleValidationException(ErrorCode.SHIFT_ALREADY_BEGUN, 'description')
     }
 

@@ -23,7 +23,8 @@ public class ExceptionHandlerAdvice {
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<ErrorDto> handleInvalidJsonException(HttpMessageNotReadableException exception) {
+  public ResponseEntity<ErrorDto> handleInvalidJsonException(
+      HttpMessageNotReadableException exception) {
     log.error("Invalid input format. Message: {}", exception.getMessage(), exception);
     var errorDto = ErrorDto.inputInvalidError();
     return ResponseEntity.badRequest().body(errorDto);

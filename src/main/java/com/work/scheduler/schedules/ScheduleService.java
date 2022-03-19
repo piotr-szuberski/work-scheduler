@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ScheduleService {
 
-  void bookSchedule(ScheduleDto scheduleDto);
+  void createSchedule(ScheduleDto scheduleDto);
 
   void deleteSchedule(String id);
 

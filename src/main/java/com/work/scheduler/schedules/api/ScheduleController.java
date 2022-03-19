@@ -36,7 +36,7 @@ class ScheduleController {
   @ResponseStatus(HttpStatus.CREATED)
   void createOrUpdate(@Valid @RequestBody ScheduleDto schedule) {
     log.debug("Creating new schedule: {}", schedule);
-    scheduleService.bookSchedule(schedule);
+    scheduleService.createSchedule(schedule);
   }
 
   @DeleteMapping("{id}")
