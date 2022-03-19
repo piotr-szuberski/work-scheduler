@@ -17,7 +17,7 @@ class ScheduleDtoFactory {
     new ScheduleDtoBuilder(shiftTime: ShiftTime.EVENING).build()
   }
 
-  static ScheduleDto scheduleDtoFuture() {
-    new ScheduleDtoBuilder(shiftDate: TestDateUtils.FUTURE).build()
+  static ScheduleDto scheduleDtoFuture(id = 'abc', shiftTime = ShiftTime.EVENING) {
+    new ScheduleDtoBuilder(id: id, shiftDate: TestDateUtils.FUTURE).build()
   }
 }

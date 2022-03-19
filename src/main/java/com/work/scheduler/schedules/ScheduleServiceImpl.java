@@ -19,7 +19,7 @@ class ScheduleServiceImpl implements ScheduleService {
 
   @Override
   public void bookSchedule(ScheduleDto scheduleDto) {
-    validateScheduleExists(scheduleDto.id());
+    validateScheduleExists(scheduleDto);
     scheduleValidator.validateSchedule(scheduleDto);
     var scheduleEntity = ScheduleMapper.toEntity(scheduleDto);
     scheduleRepository.save(scheduleEntity);
@@ -37,10 +37,16 @@ class ScheduleServiceImpl implements ScheduleService {
         .toList();
   }
 
-  private void validateScheduleExists(String scheduleId) {
-    if (scheduleRepository.existsById(scheduleId)) {
+  private void validateScheduleExists(ScheduleDto scheduleDto) {
+    if (scheduleRepository.existsById(scheduleDto.id())) {
       throw conflictException(
-          ErrorCode.SCHEDULE_ALREADY_EXISTS, "Schedule with id '%s' already exists", scheduleId);
+          ErrorCode.SCHEDULE_ALREADY_EXISTS, "Schedule with id '%s' already exists", scheduleDto.id());
+    }
+    if (scheduleRepository.existsByWorkerEmailAndShiftDate(scheduleDto.email(), scheduleDto.shiftDate())) {
+      throw conflictException(
+          ErrorCode.DAILY_LIMIT_FOR_WORKER_EXCEEDED, "Worker with '%s' already has shift for '%s' booked",
+          scheduleDto.email(), scheduleDto.shiftDate()
+      );
     }
   }
 }

@@ -1,5 +1,9 @@
 package com.work.scheduler.schedules
 
+import com.work.scheduler.common.error.ErrorCode
+import com.work.scheduler.schedules.api.ShiftTime
+import com.work.scheduler.schedules.exception.ConflictException
+
 import static com.work.scheduler.util.ScheduleDtoFactory.scheduleDtoFuture
 import static com.work.scheduler.util.TestDateUtils.FUTURE
 import static com.work.scheduler.util.TestDateUtils.PAST
@@ -44,5 +48,20 @@ class ScheduleIT extends BaseIT {
     dateFrom | dateTo | expectedSchedules
     PAST     | TODAY  | []
     FUTURE   | FUTURE | [scheduleDtoFuture()]
+  }
+
+  def "Should not allow multiple shifts for one day for one worker"() {
+    given:
+    def scheduleEvening = scheduleDtoFuture('id1', ShiftTime.EVENING)
+    def scheduleNight = scheduleDtoFuture('id2', ShiftTime.NIGHT)
+    workerRepository.save(new Worker(scheduleEvening.email()))
+
+    when:
+    scheduleService.bookSchedule(scheduleNight)
+    scheduleService.bookSchedule(scheduleEvening)
+
+    then:
+    def exception = thrown(ConflictException)
+    exception.errors.stream().findFirst().value.code() == ErrorCode.DAILY_LIMIT_FOR_WORKER_EXCEEDED
   }
 }
