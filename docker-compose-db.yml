@@ -1,23 +1,12 @@
 version: '3.8'
 
 services:
-  work-scheduler:
-    ports:
-      - '8080:8080'
-    build:
-      context: .
-    container_name: work-scheduler-app
-    depends_on:
-      - work-scheduler-db
-    environment:
-      - DB_USERNAME=scheduling_admin
-      - DB_PASSWORD=scheduling_pass
-  work-scheduler-db:
+  db:
     ports:
       - '5432:5432'
     image: postgres:9.6.24
-    container_name: work-scheduler-db
     restart: always
+    container_name: work-scheduler-db
     environment:
       POSTGRES_USER: scheduling_admin
       POSTGRES_PASSWORD: scheduling_pass
