@@ -2,6 +2,7 @@ package com.work.scheduler.common.error;
 
 import static com.work.scheduler.common.error.ErrorCode.INPUT_VALIDATION;
 import static com.work.scheduler.common.error.ErrorCode.INVALID_JSON;
+import static com.work.scheduler.common.error.ErrorCode.UNKNOWN_REASON;
 
 import java.util.Collections;
 import java.util.Set;
@@ -24,6 +25,11 @@ public record ErrorDto(Set<ScheduleError> errors) {
 
   public static ErrorDto inputInvalidError() {
     var error = new ScheduleError(INVALID_JSON, INVALID_INPUT_MSG);
+    return new ErrorDto(Collections.singleton(error));
+  }
+
+  public static ErrorDto serviceError() {
+    var error = new ScheduleError(UNKNOWN_REASON, "Unknown error");
     return new ErrorDto(Collections.singleton(error));
   }
 

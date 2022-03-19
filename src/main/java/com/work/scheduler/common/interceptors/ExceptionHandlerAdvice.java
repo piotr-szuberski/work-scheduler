@@ -23,8 +23,7 @@ public class ExceptionHandlerAdvice {
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<ErrorDto> handleInvalidJsonException(
-      HttpMessageNotReadableException exception) {
+  public ResponseEntity<ErrorDto> handleInvalidJsonException(HttpMessageNotReadableException exception) {
     log.error("Invalid input format. Message: {}", exception.getMessage(), exception);
     var errorDto = ErrorDto.inputInvalidError();
     return ResponseEntity.badRequest().body(errorDto);
@@ -35,5 +34,12 @@ public class ExceptionHandlerAdvice {
     log.error("Conflict during insert statement. Errors: {}", exception.getErrors(), exception);
     var errorDto = new ErrorDto(exception.getErrors());
     return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDto);
+  }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<ErrorDto> handleServiceException(Exception exception) {
+    log.error("Unexpected error. Message: {}", exception.getMessage(), exception);
+    var errorDto = ErrorDto.serviceError();
+    return ResponseEntity.internalServerError().body(errorDto);
   }
 }
