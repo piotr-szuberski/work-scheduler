@@ -1,0 +1,8 @@
+@host=http://localhost:8080
+
+POST {{host}}/api/v1/workers
+content-type: application/json
+
+{
+    "email": "abc@abc.com"
+}

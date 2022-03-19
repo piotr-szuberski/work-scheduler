@@ -1,0 +1,12 @@
+@host=http://localhost:8080/api/v1/schedules
+@id=abcde
+
+POST {{host}}
+content-type: application/json
+
+{
+    "id": "{{id}}",
+    "email": "abc@abc.com",
+    "shiftTime": "NIGHT",
+    "shiftDate": "2022-05-13"
+}
