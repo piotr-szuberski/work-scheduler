@@ -2,7 +2,7 @@ package com.work.scheduler.common.interceptors;
 
 
 import com.work.scheduler.common.error.ErrorDto;
-import com.work.scheduler.schedules.exception.ConflictException;
+import com.work.scheduler.schedules.exception.HttpException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +30,8 @@ public class ExceptionHandlerAdvice {
     return ResponseEntity.badRequest().body(errorDto);
   }
 
-  @ExceptionHandler(ConflictException.class)
-  public ResponseEntity<ErrorDto> handleConflictException(ConflictException exception) {
+  @ExceptionHandler(HttpException.class)
+  public ResponseEntity<ErrorDto> handleConflictException(HttpException exception) {
     log.error("Conflict during insert statement. Errors: {}", exception.getErrors(), exception);
     var errorDto = new ErrorDto(exception.getErrors());
     return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDto);

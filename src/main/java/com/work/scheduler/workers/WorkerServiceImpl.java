@@ -1,6 +1,8 @@
 package com.work.scheduler.workers;
 
+import static com.work.scheduler.schedules.exception.NotFoundException.notFoundException;
 
+import com.work.scheduler.common.error.ErrorCode;
 import com.work.scheduler.workers.api.WorkerDto;
 import com.work.scheduler.workers.repository.Worker;
 import com.work.scheduler.workers.repository.WorkerRepository;
@@ -25,6 +27,7 @@ class WorkerServiceImpl implements WorkerService {
 
   @Override
   public void deleteWorker(String workerEmail) {
+    validateToDeleteWorkerExists(workerEmail);
     repository.deleteById(workerEmail);
   }
 
@@ -32,5 +35,12 @@ class WorkerServiceImpl implements WorkerService {
   public List<String> getWorkers() {
     var workers = repository.findAll();
     return StreamSupport.stream(workers.spliterator(), false).map(Worker::getEmail).toList();
+  }
+
+  private void validateToDeleteWorkerExists(String workerEmail) {
+    if (!repository.existsById(workerEmail)) {
+      throw notFoundException(
+          ErrorCode.WORKER_DOES_NOT_EXIST, "Worker with email '%s' does not exist", workerEmail);
+    }
   }
 }
