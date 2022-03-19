@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   work-scheduler:
+    image: 'work-schedule-app:latest'
     ports:
       - '8080:8080'
     build:
@@ -10,8 +11,9 @@ services:
     depends_on:
       - work-scheduler-db
     environment:
-      - DB_USERNAME=scheduling_admin
-      - DB_PASSWORD=scheduling_pass
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://work-scheduler-db:5432/schedules
+      - SPRING_DATASOURCE_USERNAME=scheduling_admin
+      - SPRING_DATASOURCE_PASSWORD=scheduling_pass
   work-scheduler-db:
     ports:
       - '5432:5432'
