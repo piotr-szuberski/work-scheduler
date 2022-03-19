@@ -8,6 +8,20 @@ Run `docker-compose up --build` from the project root directory.
 
 Then you can execute [http requests](./http) using VS Code with [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) plugin.
 
+## How to run the tests
+
+To run unit tests:
+
+`./gradlew clean check`
+
+To run integration tests:
+
+`./gradlew clean integrationTest`
+
+To run linter:
+
+`./gradlew spotlessApply`
+
 ## Roadmap:
 - liquibase
 - swagger
