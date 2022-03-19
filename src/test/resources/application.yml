@@ -1,7 +1,3 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:9.6.24:///test_schedules?TC_INITSCRIPT=file:src/main/resources/ddl/init-db.sql
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    url: jdbc:tc:postgresql:13.6-alpine:///test_schedules?TC_INITSCRIPT=file:src/main/resources/ddl/init-db.sql
