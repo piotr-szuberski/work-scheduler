@@ -2,12 +2,14 @@ package com.work.scheduler.workers.api
 
 import static com.work.scheduler.util.TestUtils.createMvc
 import static groovy.json.JsonOutput.toJson
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 import com.work.scheduler.workers.WorkerService
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
+import org.hamcrest.Matchers
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 
 class WorkersControllerTest extends Specification {
@@ -23,7 +25,7 @@ class WorkersControllerTest extends Specification {
     def body = [email: EMAIL]
 
     when:
-    def response = mvc.perform(MockMvcRequestBuilders.post(PATH)
+    def response = mvc.perform(post(PATH)
         .contentType(MediaType.APPLICATION_JSON)
         .content(toJson(body)))
         .andReturn()
@@ -31,19 +33,19 @@ class WorkersControllerTest extends Specification {
 
     then:
     response.status == 201
+    !response.contentAsString
     1 * workerService.addWorker(_)
     0 * _
   }
 
   def "Should call get workers"() {
     when:
-    def response = mvc.perform(MockMvcRequestBuilders.get(PATH))
-        .andReturn()
-        .getResponse()
+    mvc.perform(get(PATH))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath('$.workers').isArray())
+        .andExpect(jsonPath('$.workers[0]', Matchers.is(EMAIL)))
 
     then:
-    response.status == 200
-    JSONAssert.assertEquals """{"workers": ["$EMAIL"]}""", response.contentAsString, JSONCompareMode.STRICT
     1 * workerService.getWorkers() >> [EMAIL]
     0 * _
   }

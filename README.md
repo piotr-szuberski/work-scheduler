@@ -37,4 +37,3 @@ To run linter:
 business:
 - filters to get requests
 - eventing workers about incoming shifts
-
