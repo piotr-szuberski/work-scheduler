@@ -13,3 +13,5 @@ CREATE TABLE schedules(
   CONSTRAINT one_shift_per_day UNIQUE(shift_date, worker_email),
   CONSTRAINT fk_worker FOREIGN KEY(worker_email) REFERENCES workers(email)
 );
+
+CREATE INDEX shift_date_index ON schedules(shift_date);
